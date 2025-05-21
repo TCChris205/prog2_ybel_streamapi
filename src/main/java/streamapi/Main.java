@@ -1,7 +1,13 @@
 package streamapi;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.io.InputStreamReader;
+import java.util.List;
+import java.util.Set;
 
 /** Starter for the stream api task. */
 public class Main {
@@ -19,7 +25,7 @@ public class Main {
         // Task III: Random
 
         // Task IV+V: Resources
-
+        System.out.println(resources("file.txt"));
     }
 
     /**
@@ -71,7 +77,16 @@ public class Main {
      */
     private static InputStream getResourceAsStream(String path) {
         // TODO
-        throw new UnsupportedOperationException();
+        String resFolder = "D:\\GitHub\\prog2_ybel_streamapi\\src\\main\\resources\\streamapi\\";
+        File file = new File(resFolder + path);
+        InputStream inputStream;
+        try {
+            inputStream = new FileInputStream(file);
+        } catch (IOException e) {
+            System.out.println("File could not be opened: " + e);
+            return InputStream.nullInputStream(); 
+        }
+        return inputStream;
     }
 
     /**
@@ -86,6 +101,20 @@ public class Main {
      */
     public static String resources(String path) {
         // TODO
-        throw new UnsupportedOperationException();
+        StringBuilder result = new StringBuilder();
+
+        try (InputStream stream = getResourceAsStream(path)) {
+            BufferedReader r = new BufferedReader(new InputStreamReader(stream));
+
+            r.lines()
+            .filter(l -> l.charAt(0) == 'a')
+            .filter(l -> l.length() >= 2)
+            .forEach(l -> result.append(l).append("\n"));
+
+        } catch (IOException e) {
+            System.err.println("Ouch, that didn't work: \n" + e.getMessage());
+        }
+
+        return result.toString();
     }
 }
