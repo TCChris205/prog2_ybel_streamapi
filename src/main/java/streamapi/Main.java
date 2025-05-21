@@ -1,7 +1,8 @@
 package streamapi;
 
 import java.io.InputStream;
-import java.util.*;
+import java.util.List;
+import java.util.Set;
 
 /** Starter for the stream api task. */
 public class Main {
@@ -40,10 +41,10 @@ public class Main {
      */
     public static Integer students(List<Student> studentList) {
         // TODO
-        Integer sum = 0;
-        for (Student s : studentList) {
-            sum += s.cps();
-        }
+        Integer sum;
+        sum = studentList.stream()
+        .mapToInt(Student::cps)
+        .sum();
 
         return sum;
     }
