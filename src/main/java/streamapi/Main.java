@@ -1,7 +1,10 @@
 package streamapi;
 
 import java.io.InputStream;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /** Starter for the stream api task. */
 public class Main {
@@ -54,13 +57,11 @@ public class Main {
     public static Set<Integer> ifmCps(List<Student> studentList) {
         // TODO
         Set<Integer> result = new HashSet<>();
-        Integer i = 0;
-        for (Student v : studentList) {
-            if (v.isIFM()) {
-                i = v.cps();
-                result.add(i);
-            }
-        }
+        result = studentList.stream()
+        .filter(s -> s.program() == Enrollment.IFM)
+        .mapToInt(Student::cps)
+        .boxed()
+        .collect(Collectors.toSet());
 
         return result;
     }
