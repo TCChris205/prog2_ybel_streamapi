@@ -68,6 +68,7 @@ public class Main {
         .generate(() -> r.nextInt(10))
         .limit(10)
         .filter(i -> i % 2 == 0)
+        .map(c -> c*c)
         .collect(Collectors.toList());
 
         return list;
